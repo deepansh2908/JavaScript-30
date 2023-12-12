@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>JS Drum Kit</title>
+		<link rel="stylesheet" href="style.css" />
+		<link rel="icon" href="https://fav.farm/🔥" />
+	</head>
+	<body>
+        <div class="main">Type in your name (or click) to hear what it sounds like!! </div>
+		<div class="keys">
+			<div data-key="65" class="key">
+				<kbd>A</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="66" class="key">
+				<kbd>B</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="67" class="key">
+				<kbd>C</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="68" class="key">
+				<kbd>D</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="69" class="key">
+				<kbd>E</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="70" class="key">
+				<kbd>F</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="71" class="key">
+				<kbd>G</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="72" class="key">
+				<kbd>H</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="73" class="key">
+				<kbd>I</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="74" class="key">
+				<kbd>J</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="75" class="key">
+				<kbd>K</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="76" class="key">
+				<kbd>L</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="77" class="key">
+				<kbd>M</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="78" class="key">
+				<kbd>N</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="79" class="key">
+				<kbd>O</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="80" class="key">
+				<kbd>P</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="81" class="key">
+				<kbd>Q</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="82" class="key">
+				<kbd>R</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="83" class="key">
+				<kbd>S</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="84" class="key">
+				<kbd>T</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="85" class="key">
+				<kbd>U</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="86" class="key">
+				<kbd>V</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="87" class="key">
+				<kbd>W</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="88" class="key">
+				<kbd>X</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="89" class="key">
+				<kbd>Y</kbd>
+				<span class="sound"></span>
+			</div>
+            <div data-key="90" class="key">
+				<kbd>Z</kbd>
+				<span class="sound"></span>
+			</div>
+		</div>
+
+		<audio data-key="65" src="sounds/boom.wav"></audio>
+        <audio data-key="66" src="sounds/clap-808.wav"></audio>
+        <audio data-key="67" src="sounds/clap.wav"></audio>
+        <audio data-key="68" src="sounds/crash-808.wav"></audio>
+        <audio data-key="69" src="sounds/hihat-electro.wav"></audio>
+        <audio data-key="70" src="sounds/hihat.wav"></audio>
+        <audio data-key="71" src="sounds/kick-808.wav"></audio>
+        <audio data-key="72" src="sounds/kick-big.wav"></audio>
+        <audio data-key="73" src="sounds/kick.wav"></audio>
+        <audio data-key="74" src="sounds/openhat-808.wav"></audio>
+        <audio data-key="75" src="sounds/openhat.wav"></audio>
+        <audio data-key="76" src="sounds/perc-808.wav"></audio>
+        <audio data-key="77" src="sounds/perc-chirpy.wav"></audio>
+        <audio data-key="78" src="sounds/ride.wav"></audio>
+        <audio data-key="79" src="sounds/shaker-analog.wav"></audio>
+        <audio data-key="80" src="sounds/snare-808.wav"></audio>
+        <audio data-key="81" src="sounds/snare-analog.wav"></audio>
+        <audio data-key="82" src="sounds/snare-electro.wav"></audio>
+        <audio data-key="83" src="sounds/tink.wav"></audio>
+        <audio data-key="84" src="sounds/tom-808.wav"></audio>
+        <audio data-key="85" src="sounds/tom-analog.wav"></audio>
+        <audio data-key="86" src="sounds/tom.wav"></audio>
+        <audio data-key="87" src="sounds/tink.wav"></audio>
+        <audio data-key="88" src="sounds/ride.wav"></audio>
+        <audio data-key="89" src="sounds/clap.wav"></audio>
+        <audio data-key="90" src="sounds/boom.wav"></audio>
+		
+
+		<script>
+			function removeTransition(e) {
+				if (e.propertyName !== 'transform') return;
+				e.target.classList.remove('playing');
+			}
+
+			function playSound(e) {
+				const audio = document.querySelector(
+					`audio[data-key="${e.keyCode}"]`
+				);
+				const key = document.querySelector(
+					`div[data-key="${e.keyCode}"]`
+				);
+				if (!audio) return;
+
+				key.classList.add('playing');
+				//this will rewind the audio to the beginning
+				audio.currentTime = 0;
+				audio.play();
+			}
+
+			const keys = Array.from(document.querySelectorAll('.key'));
+			keys.forEach((key) =>
+				//when transition ends, run removeTransition function
+				key.addEventListener('transitionend', removeTransition)
+			);
+			window.addEventListener('keydown', playSound);
+
+			//code for click functionality
+			const items = document.querySelectorAll('.key');
+			function clickTrigger() {
+				let key = this.dataset.key;
+				const audio = document.querySelector(
+					`audio[data-key="${key}"]`
+				);
+				const item = this;
+				item.classList.add('playing');
+				audio.currentTime = 0;
+				audio.play();
+			}
+
+			function unclickTrigger() {
+				this.classList.remove('playing');
+			}
+			items.forEach((item) =>
+				item.addEventListener('mousedown', clickTrigger)
+			);
+			items.forEach((item) =>
+				item.addEventListener('mouseup', unclickTrigger)
+			);
+		</script>
+	</body>
+</html>
+
+<!-- Resources -->
+<!-- https://sushmithavootukuri.medium.com/difference-between-window-document-and-screen-in-javascript-757a65b25e9a#:~:text=Window%20Vs%20Document,as%20shown%20in%20Figure%201.&text=The%20window%20object%20represents%20a,document%20loaded%20in%20that%20window. -->
