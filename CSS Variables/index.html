@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>CSS Variables and JS</title>
+		<link rel="icon" href="https://fav.farm/🔥" />
+	</head>
+	<body>
+		<h2>Update CSS Variables with <span class="hl">JS</span></h2>
+
+		<!-- The for property of a label binds the label to the element it is meant to address. <label for=“specifies the element this label is bound to”> -->
+        <!-- a new input type, 'range', which is basically a slider that has a default “value” a min value and max value. -->
+        <div class="controls">
+			<label for="spacing">Spacing:</label>
+			<input
+				id="spacing"
+				type="range"
+				name="spacing"
+				min="10"
+				max="200"
+				value="10"
+				data-sizing="px"
+			/>
+
+			<label for="blur">Blur:</label>
+			<input
+				id="blur"
+				type="range"
+				name="blur"
+				min="0"
+				max="25"
+				value="10"
+				data-sizing="px"
+			/>
+
+			<label for="base">Base Color</label>
+			<input id="base" type="color" name="base" value="#ffc600" />
+		</div>
+
+		<img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
+
+		<style>
+            /*declaring some variables on the root element*/
+			:root{
+                --base: #ffc600;
+                --spacing: 10px;
+                --blur: 10px;
+            }
+
+            /*now assigning the padding, background and filter for the image as per the css variables*/
+            img{
+                padding: var(--spacing);
+                background: var(--base);
+                filter: blur(var(--blur));
+            }
+            
+            /*same goes for the highlighted text*/
+            .hl{
+                color: var(--base);
+            }
+
+			body {
+				text-align: center;
+				background: #193549;
+				color: white;
+				font-family: 'helvetica neue', sans-serif;
+				font-weight: 100;
+				font-size: 50px;
+			}
+
+			.controls {
+				margin-bottom: 50px;
+			}
+
+			input {
+				width: 100px;
+			}
+		</style>
+
+		<script>
+            //now selecting all the input under the controls class
+            const inputs = document.querySelectorAll('.controls input');
+
+            //now listening on a change event on these inputs
+            inputs.forEach((input)=>{
+                input.addEventListener('change', handleUpdate);
+            });
+
+            //also listening on a mousemove event so that properties change on the go as we change them
+            inputs.forEach((input)=>{
+                input.addEventListener('mousemove', handleUpdate);
+            });
+
+            function handleUpdate(e){
+                //the issue is that value attribute will onnly give us 10, 30 or like that.B But we want 10px, 30px
+                //so using the data-sizing attribute here
+                const suffix = this.dataset.sizing || '';
+                //this.name gives us the name of input element- either spacing, blur or base
+                //document.documentElement returns the Element that is the root element of the document 
+                //so we are setting the property of a css variable to this.value+suffix
+                document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+
+                if (this.id == "spacing"){
+                    
+                }
+                else if (this.id == "blur"){
+
+                }
+                else if (this.id == "base"){
+
+                }
+            }
+
+            /*
+            we can assign custom attributes to an element by using a prefix called data (just like we have data-sizing attributes here)
+            dataset is an object that contains all the data attributes of that element
+            */
+        </script>
+	</body>
+</html>
